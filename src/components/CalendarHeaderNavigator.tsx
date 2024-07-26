@@ -28,18 +28,10 @@ const CalendarHeaderNavigator = ({ selectedDay, onNavigation }: Props) => {
         Today
       </Button>
       <div>
-        <Button
-          variant="ghost"
-          className="px-2"
-          onClick={handleChevronLeftClick}
-        >
+        <Button variant="ghost" size="icon" onClick={handleChevronLeftClick}>
           <ChevronLeftIcon className="size-5" />
         </Button>
-        <Button
-          variant="ghost"
-          className="px-2"
-          onClick={handleChevronRightClick}
-        >
+        <Button variant="ghost" size="icon" onClick={handleChevronRightClick}>
           <ChevronRightIcon className="size-5" />
         </Button>
       </div>
