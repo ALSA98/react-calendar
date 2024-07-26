@@ -6,9 +6,10 @@ import CalendarMonthDay from "./CalendarMonthDay";
 
 type Props = {
   selectedDay: Dayjs;
+  today: Dayjs;
 };
 
-const CalendarMonth = ({ selectedDay }: Props) => {
+const CalendarMonth = ({ selectedDay, today }: Props) => {
   const daysOfWeekRef = useRef<string[]>([]);
 
   const daysOfMonth = useMemo(() => {
@@ -44,10 +45,7 @@ const CalendarMonth = ({ selectedDay }: Props) => {
       <div className="grid flex-grow grid-cols-7 divide-x">
         <List items={daysOfMonth}>
           {(day) => (
-            <CalendarMonthDay
-              day={day}
-              isToday={day.isSame(selectedDay, "day")}
-            />
+            <CalendarMonthDay day={day} isToday={day.isSame(today, "day")} />
           )}
         </List>
       </div>

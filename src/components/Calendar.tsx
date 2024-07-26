@@ -7,7 +7,8 @@ import en from "dayjs/locale/en";
 import type { Dayjs } from "dayjs";
 
 const Calendar = () => {
-  const [selectedDay, setSelectedDay] = useState(dayjs());
+  const today = dayjs();
+  const [selectedDay, setSelectedDay] = useState(dayjs(today));
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   dayjs.locale({ ...en, weekStart: 6 });
@@ -34,7 +35,7 @@ const Calendar = () => {
         }
         onNavigation={(newDay: Dayjs) => setSelectedDay(newDay)}
       />
-      <CalendarMonth selectedDay={selectedDay} />
+      <CalendarMonth selectedDay={selectedDay} today={today} />
     </div>
   );
 };
