@@ -4,6 +4,7 @@ import CalendarMonth from "./CalendarMonth";
 import SwitchWithLabel from "./ui/SwitchWithLabel";
 import dayjs from "dayjs";
 import en from "dayjs/locale/en";
+import type { Dayjs } from "dayjs";
 
 const Calendar = () => {
   const [selectedDay, setSelectedDay] = useState(dayjs());
@@ -31,6 +32,7 @@ const Calendar = () => {
             className="ms-auto"
           />
         }
+        onNavigation={(newDay: Dayjs) => setSelectedDay(newDay)}
       />
       <CalendarMonth selectedDay={selectedDay} />
     </div>

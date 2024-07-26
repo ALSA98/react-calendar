@@ -1,21 +1,45 @@
 import { Button } from "@/components/ui/Button";
 import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { ChevronLeftIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
 
 type Props = {
   selectedDay: Dayjs;
+  onNavigation: (newDay: Dayjs) => void;
 };
 
-const CalendarHeaderNavigator = ({ selectedDay }: Props) => {
+const CalendarHeaderNavigator = ({ selectedDay, onNavigation }: Props) => {
+  const handleTodayClick = () => {
+    onNavigation(dayjs());
+  };
+
+  const handleChevronLeftClick = () => {
+    onNavigation(selectedDay.subtract(1, "month"));
+  };
+
+  const handleChevronRightClick = () => {
+    onNavigation(selectedDay.add(1, "month"));
+  };
+
   return (
     <div className="inline-flex h-full items-center gap-3">
-      <Button variant="outline">Today</Button>
+      <Button variant="outline" onClick={handleTodayClick}>
+        Today
+      </Button>
       <div>
-        <Button variant="ghost" className="px-2">
+        <Button
+          variant="ghost"
+          className="px-2"
+          onClick={handleChevronLeftClick}
+        >
           <ChevronLeftIcon className="size-5" />
         </Button>
-        <Button variant="ghost" className="px-2">
+        <Button
+          variant="ghost"
+          className="px-2"
+          onClick={handleChevronRightClick}
+        >
           <ChevronRightIcon className="size-5" />
         </Button>
       </div>
