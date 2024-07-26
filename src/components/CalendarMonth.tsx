@@ -41,7 +41,7 @@ const CalendarMonth = ({ selectedDay }: Props) => {
           )}
         </List>
       </div>
-      <div className="grid flex-grow grid-cols-7 grid-rows-5 divide-x">
+      <div className="grid flex-grow grid-cols-7 divide-x">
         <List items={daysOfMonth}>
           {(day) => (
             <CalendarMonthDay
