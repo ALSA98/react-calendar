@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Dayjs } from "dayjs";
+import { Button } from "@/components/ui/Button";
+import { PlusIcon } from "lucide-react";
 
 type Props = {
   day: Dayjs;
@@ -12,8 +14,8 @@ const CalendarMonthDay = ({ day, isToday }: Props) => {
     <div
       key={day.unix()}
       className={cn(
-        `mt-auto h-full justify-end border-b p-2 text-center text-sm font-medium
-        opacity-70 hover:bg-accent`,
+        `group relative mt-auto h-full justify-end border-b p-2 text-center text-sm
+        font-medium opacity-70 hover:z-10 hover:outline hover:outline-offset-[-1px]`,
       )}
     >
       <span
@@ -24,6 +26,13 @@ const CalendarMonthDay = ({ day, isToday }: Props) => {
       >
         {isStartOfMonth && day.format("MMM")} {day.format("D")}
       </span>
+      <Button
+        size="smIcon"
+        variant="ghost"
+        className="absolute end-0.5 top-0.5 hidden group-hover:flex"
+      >
+        <PlusIcon className="size-5" />
+      </Button>
       <div className="flex flex-col gap-1 pt-1"></div>
     </div>
   );
