@@ -1,8 +1,7 @@
 import { useState } from "react";
 import CalendarHeader from "./CalendarHeader";
-import { Switch } from "@/components/ui/Switch";
-import { Label } from "@/components/ui/Label";
 import CalendarMonth from "./CalendarMonth";
+import SwitchWithLabel from "./ui/SwitchWithLabel";
 
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -18,14 +17,14 @@ const Calendar = () => {
     >
       <CalendarHeader
         darkModeSwitch={
-          <div className="ml-auto flex items-center space-x-2">
-            <Switch
-              id="calendar-dark-mode"
-              defaultChecked={isDarkMode}
-              onCheckedChange={toggleDarkMode}
-            />
-            <Label htmlFor="calendar-dark-mode">Dark Mode</Label>
-          </div>
+          <SwitchWithLabel
+            label="Dark Mode"
+            switchProps={{
+              defaultChecked: isDarkMode,
+              onCheckedChange: toggleDarkMode,
+            }}
+            className="ms-auto"
+          />
         }
       />
       <CalendarMonth selectedDate={selectedDate} />
