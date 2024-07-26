@@ -2,10 +2,14 @@ import { useState } from "react";
 import CalendarHeader from "./CalendarHeader";
 import CalendarMonth from "./CalendarMonth";
 import SwitchWithLabel from "./ui/SwitchWithLabel";
+import dayjs from "dayjs";
+import en from "dayjs/locale/en";
 
 const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDay, setSelectedDay] = useState(dayjs());
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  dayjs.locale({ ...en, weekStart: 6 });
 
   const toggleDarkMode = () => {
     setIsDarkMode((prevMode) => !prevMode);
@@ -16,7 +20,7 @@ const Calendar = () => {
       className={`flex h-full w-full flex-col bg-background ${isDarkMode ? "dark" : ""}`}
     >
       <CalendarHeader
-        selectedDate={selectedDate}
+        selectedDay={selectedDay}
         darkModeSwitch={
           <SwitchWithLabel
             label="Dark Mode"
@@ -28,7 +32,7 @@ const Calendar = () => {
           />
         }
       />
-      <CalendarMonth selectedDate={selectedDate} />
+      <CalendarMonth selectedDay={selectedDay} />
     </div>
   );
 };

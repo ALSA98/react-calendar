@@ -1,22 +1,19 @@
 import { getEachDayOfInterval } from "@/lib/dayjs";
 import List from "./utils/List";
-import dayjs from "dayjs";
-import en from "dayjs/locale/en";
+import type { Dayjs } from "dayjs";
 import { useMemo, useRef } from "react";
 import CalendarMonthDay from "./CalendarMonthDay";
 
 type Props = {
-  selectedDate: Date;
+  selectedDay: Dayjs;
 };
 
-const CalendarMonth = ({ selectedDate }: Props) => {
-  dayjs.locale({ ...en, weekStart: 6 });
-
+const CalendarMonth = ({ selectedDay }: Props) => {
   const daysOfWeekRef = useRef<string[]>([]);
 
   const daysOfMonth = useMemo(() => {
-    const firstWeekStart = dayjs(selectedDate).startOf("month").startOf("week");
-    const lastWeekEnd = dayjs(selectedDate).endOf("month").endOf("week");
+    const firstWeekStart = selectedDay.startOf("month").startOf("week");
+    const lastWeekEnd = selectedDay.endOf("month").endOf("week");
 
     const daysOfWeek = getEachDayOfInterval({
       start: firstWeekStart,
@@ -31,7 +28,7 @@ const CalendarMonth = ({ selectedDate }: Props) => {
       start: firstWeekStart,
       end: lastWeekEnd,
     });
-  }, [selectedDate]);
+  }, [selectedDay]);
 
   return (
     <div className="flex w-full flex-grow flex-col text-foreground">
@@ -49,7 +46,7 @@ const CalendarMonth = ({ selectedDate }: Props) => {
           {(day) => (
             <CalendarMonthDay
               day={day}
-              isToday={day.isSame(selectedDate, "day")}
+              isToday={day.isSame(selectedDay, "day")}
             />
           )}
         </List>
