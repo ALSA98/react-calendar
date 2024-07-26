@@ -16,6 +16,7 @@ const Calendar = () => {
       className={`flex h-full w-full flex-col bg-background ${isDarkMode ? "dark" : ""}`}
     >
       <CalendarHeader
+        selectedDate={selectedDate}
         darkModeSwitch={
           <SwitchWithLabel
             label="Dark Mode"
