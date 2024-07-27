@@ -5,6 +5,7 @@ import SwitchWithLabel from "./ui/SwitchWithLabel";
 import dayjs from "dayjs";
 import en from "dayjs/locale/en";
 import type { Dayjs } from "dayjs";
+import EventProvider from "@/context/EventContext";
 
 const Calendar = () => {
   const today = dayjs();
@@ -12,10 +13,6 @@ const Calendar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   dayjs.locale({ ...en, weekStart: 6 });
-
-  const toggleDarkMode = () => {
-    setIsDarkMode((prevMode) => !prevMode);
-  };
 
   return (
     <div
@@ -28,14 +25,16 @@ const Calendar = () => {
             label="Dark Mode"
             switchProps={{
               defaultChecked: isDarkMode,
-              onCheckedChange: toggleDarkMode,
+              onCheckedChange: (checked) => setIsDarkMode(checked),
             }}
             className="ms-auto"
           />
         }
         onNavigation={(newDay: Dayjs) => setSelectedDay(newDay)}
       />
-      <CalendarMonth selectedDay={selectedDay} today={today} />
+      <EventProvider>
+        <CalendarMonth selectedDay={selectedDay} today={today} />
+      </EventProvider>
     </div>
   );
 };
