@@ -4,21 +4,23 @@ import { Label } from "@/components/ui/Label";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  switchProps: ComponentProps<typeof Switch>;
   label: ReactNode | string;
   labelProps?: ComponentProps<typeof Label>;
   className?: string;
-};
+} & ComponentProps<typeof Switch>;
 
 const SwitchWithLabel = forwardRef(
-  (props: Props, ref: Ref<HTMLButtonElement>) => {
+  (
+    { label, labelProps, className, ...switchProps }: Props,
+    ref: Ref<HTMLButtonElement>,
+  ) => {
     const id = useId();
 
     return (
-      <div className={cn("flex items-center space-x-2", props.className)}>
-        <Switch id={id} ref={ref} {...props.switchProps} />
-        <Label htmlFor={id} {...props.labelProps}>
-          {props.label}
+      <div className={cn("flex items-center space-x-2", className)}>
+        <Switch id={id} ref={ref} {...switchProps} />
+        <Label htmlFor={id} {...labelProps}>
+          {label}
         </Label>
       </div>
     );
