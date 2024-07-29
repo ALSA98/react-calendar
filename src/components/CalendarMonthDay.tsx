@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Dayjs } from "dayjs";
-import { Button } from "@/components/ui/Button";
-import { PlusIcon } from "lucide-react";
+import EventAdder from "@/components/EventAdder";
 
 type Props = {
   day: Dayjs;
@@ -26,13 +25,10 @@ const CalendarMonthDay = ({ day, isToday }: Props) => {
       >
         {isStartOfMonth && day.format("MMM")} {day.format("D")}
       </span>
-      <Button
-        size="smIcon"
-        variant="ghost"
+      <EventAdder
+        day={day}
         className="absolute end-0.5 top-0.5 hidden group-hover:flex"
-      >
-        <PlusIcon className="size-5" />
-      </Button>
+      />
       <div className="flex flex-col gap-1 pt-1"></div>
     </div>
   );
