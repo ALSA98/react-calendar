@@ -23,10 +23,8 @@ const Calendar = () => {
         darkModeSwitch={
           <SwitchWithLabel
             label="Dark Mode"
-            switchProps={{
-              defaultChecked: isDarkMode,
-              onCheckedChange: (checked) => setIsDarkMode(checked),
-            }}
+            defaultChecked={isDarkMode}
+            onCheckedChange={(checked) => setIsDarkMode(checked)}
             className="ms-auto"
           />
         }
