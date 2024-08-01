@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import CalendarHeaderNavigator from "./CalendarHeaderNavigator";
+import CalendarHeaderNavigator from "@/components/CalendarHeaderNavigator";
 import type { Dayjs } from "dayjs";
 
 type Props = {

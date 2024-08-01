@@ -1,8 +1,8 @@
 import { getEachDayOfInterval } from "@/lib/dayjs";
-import List from "./utils/List";
+import List from "@/components/utils/List";
 import type { Dayjs } from "dayjs";
 import { useMemo, useRef } from "react";
-import CalendarMonthDay from "./CalendarMonthDay";
+import CalendarMonthDay from "@/components/CalendarMonthDay";
 
 type Props = {
   selectedDay: Dayjs;

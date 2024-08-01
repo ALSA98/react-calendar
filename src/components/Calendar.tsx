@@ -1,7 +1,7 @@
 import { useState } from "react";
-import CalendarHeader from "./CalendarHeader";
-import CalendarMonth from "./CalendarMonth";
-import SwitchWithLabel from "./ui/SwitchWithLabel";
+import CalendarHeader from "@/components/CalendarHeader";
+import CalendarMonth from "@/components/CalendarMonth";
+import SwitchWithLabel from "@/components/ui/SwitchWithLabel";
 import dayjs from "dayjs";
 import en from "dayjs/locale/en";
 import type { Dayjs } from "dayjs";
