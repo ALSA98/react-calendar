@@ -11,7 +11,6 @@ const CalendarMonthDay = ({ day, isToday }: Props) => {
   const isStartOfMonth = day.date() === 1;
   return (
     <div
-      key={day.unix()}
       className={cn(
         `group relative mt-auto h-full justify-end border-b p-2 text-center text-sm
         font-medium opacity-70 hover:z-10 hover:outline hover:outline-offset-[-1px]`,
