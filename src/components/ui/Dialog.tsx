@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
+import { XIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
+import IconButton from "@/components/ui/IconButton";
 
 const Dialog = DialogPrimitive.Root;
 
@@ -57,9 +57,9 @@ const DialogContent = React.forwardRef<
       {children}
 
       <DialogPrimitive.Close className="absolute right-3 top-3">
-        <Button variant="ghost" size="icon">
-          <X className="size-5" />
-        </Button>
+        <IconButton>
+          <XIcon className="size-5" />
+        </IconButton>
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
@@ -73,7 +73,7 @@ const DialogHeader = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col space-y-1.5 text-center sm:text-left",
+      "flex flex-col space-y-1.5 text-center text-foreground sm:text-left",
       className,
     )}
     {...props}

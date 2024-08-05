@@ -3,6 +3,7 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { ChevronLeftIcon } from "lucide-react";
 import { ChevronRightIcon } from "lucide-react";
+import IconButton from "@/components/ui/IconButton";
 
 type Props = {
   selectedDay: Dayjs;
@@ -28,12 +29,12 @@ const CalendarHeaderNavigator = ({ selectedDay, onNavigation }: Props) => {
         Today
       </Button>
       <div>
-        <Button variant="ghost" size="icon" onClick={handleChevronLeftClick}>
-          <ChevronLeftIcon className="size-5" />
-        </Button>
-        <Button variant="ghost" size="icon" onClick={handleChevronRightClick}>
-          <ChevronRightIcon className="size-5" />
-        </Button>
+        <IconButton onClick={handleChevronLeftClick}>
+          <ChevronLeftIcon />
+        </IconButton>
+        <IconButton onClick={handleChevronRightClick}>
+          <ChevronRightIcon />
+        </IconButton>
       </div>
       <span className="pb-0.5 text-2xl font-semibold text-foreground">
         {selectedDay.format("MMMM YYYY")}
