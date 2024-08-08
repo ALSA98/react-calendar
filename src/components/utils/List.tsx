@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 type Props<T> = {
-  items: T[];
+  items: readonly T[];
   getKey?: (item: T, index: number) => string | number;
   children: (item: T, key: string | number, index: number) => ReactNode;
 };

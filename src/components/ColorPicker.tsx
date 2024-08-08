@@ -1,37 +1,61 @@
 import { Label } from "@/components/ui/Label";
-import { Button } from "@/components/ui/Button";
 
 import { EVENT_COLORS } from "@/context/EventContext";
 import List from "@/components/utils/List";
 import { cn } from "@/lib/utils";
+import { useId } from "react";
+import { CheckIcon } from "lucide-react";
 
 type Props = {
   selected?: (typeof EVENT_COLORS)[number];
+  onChange: (color: (typeof EVENT_COLORS)[number]) => void;
 };
 
-const ColorPicker = ({ selected }: Props) => {
-  const activeClasses =
-    "after:absolute after:size-3 after:rounded-full after:bg-background after:content-['']";
+const ColorPicker = ({ selected = EVENT_COLORS[0], onChange }: Props) => {
+  const id = useId();
+
+  const bgColorClasses: {
+    [K in (typeof EVENT_COLORS)[number]]: string;
+  } = {
+    red: "bg-red-600 hover:bg-red-400",
+    green: "bg-green-600 hover:bg-green-400",
+    blue: "bg-blue-600 hover:bg-blue-400",
+  };
 
   return (
-    <div className="flex-col space-y-2">
+    <span className="flex-col space-y-2">
       <Label>Color</Label>
 
-      <div className="flex space-x-2">
-        <List items={EVENT_COLORS as unknown as string[]}>
+      <span className="flex space-x-2">
+        <List items={EVENT_COLORS}>
           {(color) => (
-            <Button
-              size="smIcon"
-              className={cn(
-                "relative rounded-full hover:opacity-75",
-                color === selected && activeClasses,
-              )}
-              style={{ backgroundColor: color }}
-            />
+            <span key={color}>
+              <input
+                type="radio"
+                name="color"
+                value={color}
+                id={`${id}-${color}`}
+                checked={selected === color}
+                className="hidden"
+                onChange={() => onChange(color)}
+              />
+              <label
+                htmlFor={`${id}-${color}`}
+                className={cn(
+                  "relative block size-8 cursor-pointer rounded-full transition-all duration-200",
+                  bgColorClasses[color],
+                )}
+              >
+                <span className="sr-only">{color}</span>
+                {selected === color && (
+                  <CheckIcon className="absolute start-1.5 top-1.5 size-5 text-white" />
+                )}
+              </label>
+            </span>
           )}
         </List>
-      </div>
-    </div>
+      </span>
+    </span>
   );
 };
 
