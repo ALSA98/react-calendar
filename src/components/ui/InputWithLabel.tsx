@@ -17,12 +17,12 @@ const InputWithLabel = forwardRef(
     const id = useId();
 
     return (
-      <div className={cn("flex flex-col space-y-2", className)}>
+      <span className={cn("flex flex-col space-y-2", className)}>
         <Label htmlFor={id} {...labelProps}>
           {label}
         </Label>
         <Input id={id} ref={ref} {...inputProps} />
-      </div>
+      </span>
     );
   },
 );

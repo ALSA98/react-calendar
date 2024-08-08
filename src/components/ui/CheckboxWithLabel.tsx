@@ -17,12 +17,12 @@ const CheckboxWithLabel = forwardRef(
     const id = useId();
 
     return (
-      <div className={cn("flex items-center space-x-2", className)}>
+      <span className={cn("flex items-center space-x-2", className)}>
         <Checkbox id={id} ref={ref} {...checkboxProps} />
         <Label htmlFor={id} {...labelProps}>
           {label}
         </Label>
-      </div>
+      </span>
     );
   },
 );

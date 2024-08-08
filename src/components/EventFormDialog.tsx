@@ -12,6 +12,7 @@ import CheckboxWithLabel from "@/components/ui/CheckboxWithLabel";
 import { Button } from "@/components/ui/Button";
 import ColorPicker from "@/components/ColorPicker";
 import EllipsisMenu from "@/components/ui/EllipsisMenu";
+import type { Event } from "@/context/EventContext";
 
 type Props = {
   day: Dayjs;
@@ -19,24 +20,24 @@ type Props = {
 };
 
 const EventFormDialog = ({ day, event }: Props) => {
-  const title = day ? "Add new event" : "Edit event";
+  const title = !event ? "Add new event" : "Edit event";
   return (
     <DialogContent>
       {event && <EllipsisMenu className="absolute right-14 top-3" />}
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
-        <p className="text-sm">{day?.format("	dddd, MMMM D, YYYY")}</p>
+        <span className="text-sm">{day?.format("	dddd, MMMM D, YYYY")}</span>
       </DialogHeader>
       <DialogDescription>
-        <div className="mt-2 flex flex-col space-y-4">
+        <span className="mt-2 flex flex-col space-y-4">
           <InputWithLabel label="Name" />
           <CheckboxWithLabel label="All Day" />
-          <div className="flex space-x-4">
+          <span className="flex space-x-4">
             <InputWithLabel label="Start Time" type="time" className="w-1/2" />
             <InputWithLabel label="End Time" type="time" className="w-1/2" />
-          </div>
+          </span>
           <ColorPicker />
-        </div>
+        </span>
       </DialogDescription>
       <DialogFooter className="pt-2 sm:justify-start">
         <Button className="w-full">Save</Button>
