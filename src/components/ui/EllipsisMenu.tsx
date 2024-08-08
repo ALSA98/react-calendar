@@ -16,7 +16,7 @@ const EllipsisMenu = ({ className }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <IconButton className={className}>
+        <IconButton srText="Options" className={className}>
           <EllipsisVerticalIcon />
         </IconButton>
       </DropdownMenuTrigger>

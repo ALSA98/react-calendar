@@ -56,11 +56,10 @@ const DialogContent = React.forwardRef<
     >
       {children}
 
-      <DialogPrimitive.Close className="absolute right-3 top-3">
-        <IconButton>
+      <DialogPrimitive.Close asChild className="absolute right-3 top-3">
+        <IconButton srText="Close">
           <XIcon className="size-5" />
         </IconButton>
-        <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
