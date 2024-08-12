@@ -1,17 +1,17 @@
 import { Label } from "@/components/ui/Label";
 
-import { EVENT_COLORS } from "@/context/EventContext";
 import List from "@/components/utils/List";
 import { cn } from "@/lib/utils";
 import { useId } from "react";
 import { CheckIcon } from "lucide-react";
+import { EVENT_COLORS } from "@/types";
 
 type Props = {
   selected?: (typeof EVENT_COLORS)[number];
   onChange: (color: (typeof EVENT_COLORS)[number]) => void;
 };
 
-const ColorPicker = ({ selected = EVENT_COLORS[0], onChange }: Props) => {
+const ColorPicker = ({ selected, onChange }: Props) => {
   const id = useId();
 
   const bgColorClasses: {

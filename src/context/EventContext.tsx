@@ -1,28 +1,20 @@
-import { UnionOmit } from "@/lib/types";
-import { createContext, ReactNode, useContext, useState } from "react";
-
-export const EVENT_COLORS = ["red", "green", "blue"] as const;
-
-export type Event = {
-  id: string;
-  name: string;
-  color: (typeof EVENT_COLORS)[number];
-  date: Date;
-} & (
-  | { isAllDay: true; startTime: string; endTime: string }
-  | { isAllDay: false; startTime?: never; endTime?: never }
-);
-
-export type NewEvent = UnionOmit<Event, "id">;
+import { CalendarEvent, NewCalendarEvent } from "@/types";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 export type EventContextValue = {
-  events: Event[];
-  addEvent: (newEvent: NewEvent) => void;
+  events: CalendarEvent[];
+  addEvent: (newEvent: NewCalendarEvent) => Promise<void>;
 };
 
 const EventContext = createContext<EventContextValue>({
   events: [],
-  addEvent: () => null,
+  addEvent: () => Promise.resolve(),
 });
 
 export const useEventContext = () => {
@@ -33,18 +25,26 @@ export const useEventContext = () => {
   return value;
 };
 
-const EventProvider = ({ children }: { children: ReactNode }) => {
-  const [events, setEvents] = useState<Event[]>([]);
+type ProviderProps = {
+  events: CalendarEvent[];
+  onAdd: (newEvent: NewCalendarEvent) => Promise<{ id: string }>;
+  children: ReactNode;
+};
 
+const EventProvider = ({ events, children, onAdd }: ProviderProps) => {
+  const [cachedEvents, setCachedEvents] = useState(() => events);
   const value: EventContextValue = {
-    events,
-    addEvent: (newEvent: NewEvent) => {
-      setEvents((prevEvents) => [
-        ...prevEvents,
-        { ...newEvent, id: crypto.randomUUID() },
-      ]);
+    events: cachedEvents,
+    addEvent: async (newEvent: NewCalendarEvent) => {
+      const { id } = await onAdd(newEvent);
+      setCachedEvents((prev) => [...prev, { ...newEvent, id }]);
     },
   };
+
+  useEffect(() => {
+    console.log("events prop effect inside context");
+    setCachedEvents(events);
+  }, [events]);
 
   return (
     <EventContext.Provider value={value}>{children}</EventContext.Provider>
