@@ -1,16 +1,17 @@
 import { getEachDayOfInterval } from "@/lib/dayjs";
 import List from "@/components/utils/List";
 import type { Dayjs } from "dayjs";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import CalendarMonthDay from "@/components/CalendarMonthDay";
 import WeekNameRow from "@/components/WeekNameRow";
 
 type Props = {
   selectedDay: Dayjs;
   today: Dayjs;
+  onIntervalChange: (start: Date, end: Date) => void;
 };
 
-const CalendarMonth = ({ selectedDay, today }: Props) => {
+const CalendarMonth = ({ selectedDay, today, onIntervalChange }: Props) => {
   const firstWeekStart = useMemo(
     () => selectedDay.startOf("month").startOf("week"),
     [selectedDay],
@@ -29,6 +30,10 @@ const CalendarMonth = ({ selectedDay, today }: Props) => {
       }),
     [selectedDay],
   );
+
+  useEffect(() => {
+    onIntervalChange(firstWeekStart.toDate(), lastWeekEnd.toDate());
+  }, [daysOfMonth]);
 
   return (
     <div className="flex w-full flex-grow flex-col text-foreground">
