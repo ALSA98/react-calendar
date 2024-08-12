@@ -1,19 +1,22 @@
 import { cn } from "@/lib/utils";
 import { Dayjs } from "dayjs";
 import EventAdder from "@/components/EventAdder";
+import EventList from "@/components/EventList";
+import { CalendarEvent } from "@/types";
 
 type Props = {
   day: Dayjs;
   isToday: boolean;
+  events: CalendarEvent[];
 };
 
-const CalendarMonthDay = ({ day, isToday }: Props) => {
+const CalendarMonthDay = ({ day, isToday, events }: Props) => {
   const isStartOfMonth = day.date() === 1;
   return (
     <div
       className={cn(
         `group relative mt-auto h-full justify-end border-b p-2 text-center text-sm
-        font-medium opacity-70 hover:z-10 hover:outline hover:outline-offset-[-1px]`,
+        font-medium outline-2 hover:z-10 hover:outline hover:outline-offset-0`,
       )}
     >
       <span
@@ -26,9 +29,11 @@ const CalendarMonthDay = ({ day, isToday }: Props) => {
       </span>
       <EventAdder
         day={day}
-        className="absolute end-0.5 top-0.5 hidden group-hover:flex"
+        className="absolute end-0 top-0 hidden group-hover:flex"
       />
-      <div className="flex flex-col gap-1 pt-1"></div>
+      <div className="flex flex-col gap-1 pt-1 text-start">
+        <EventList events={events} />
+      </div>
     </div>
   );
 };

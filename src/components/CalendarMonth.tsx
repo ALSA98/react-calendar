@@ -1,9 +1,11 @@
 import { getEachDayOfInterval } from "@/lib/dayjs";
 import List from "@/components/utils/List";
 import type { Dayjs } from "dayjs";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import CalendarMonthDay from "@/components/CalendarMonthDay";
 import WeekNameRow from "@/components/WeekNameRow";
+import { useEventContext } from "@/context/EventContext";
+import dayjs from "dayjs";
 
 type Props = {
   selectedDay: Dayjs;
@@ -12,6 +14,8 @@ type Props = {
 };
 
 const CalendarMonth = ({ selectedDay, today, onIntervalChange }: Props) => {
+  const { events } = useEventContext();
+
   const firstWeekStart = useMemo(
     () => selectedDay.startOf("month").startOf("week"),
     [selectedDay],
@@ -31,6 +35,11 @@ const CalendarMonth = ({ selectedDay, today, onIntervalChange }: Props) => {
     [selectedDay],
   );
 
+  const getDayEvents = useCallback(
+    (day: Dayjs) => events.filter((e) => day.isSame(dayjs(e.date))),
+    [events],
+  );
+
   useEffect(() => {
     onIntervalChange(firstWeekStart.toDate(), lastWeekEnd.toDate());
   }, [daysOfMonth]);
@@ -45,6 +54,7 @@ const CalendarMonth = ({ selectedDay, today, onIntervalChange }: Props) => {
               key={day.unix()}
               day={day}
               isToday={day.isSame(today, "day")}
+              events={getDayEvents(day)}
             />
           )}
         </List>
