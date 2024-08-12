@@ -4,6 +4,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { cn } from "@/lib/utils";
 import EventFormDialog from "@/components/EventFormDialog";
 import { Dayjs } from "dayjs";
+import { useState } from "react";
 
 type Props = {
   day: Dayjs;
@@ -11,14 +12,16 @@ type Props = {
 };
 
 const EventAdder = ({ day, className }: Props) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button size="smIcon" variant="ghost" className={cn(className)}>
           <PlusIcon className="size-5" />
         </Button>
       </DialogTrigger>
-      <EventFormDialog day={day} />
+      <EventFormDialog day={day} onSubmitted={() => setOpen(false)} />
     </Dialog>
   );
 };
