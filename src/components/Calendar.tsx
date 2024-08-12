@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import CalendarHeader from "@/components/CalendarHeader";
 import CalendarMonth from "@/components/CalendarMonth";
-import SwitchWithLabel from "@/components/ui/SwitchWithLabel";
 import dayjs from "dayjs";
 import en from "dayjs/locale/en";
 import EventProvider from "@/context/EventContext";
@@ -19,8 +18,6 @@ const Calendar = ({ getIntervalEvents, onAdd }: Props) => {
   const [intervalEnd, setIntervalEnd] = useState<Date>();
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [selectedDay, setSelectedDay] = useState(dayjs(today));
-
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   dayjs.locale({ ...en, weekStart: 6 });
 
@@ -40,19 +37,9 @@ const Calendar = ({ getIntervalEvents, onAdd }: Props) => {
   }, [intervalStart, intervalEnd]);
 
   return (
-    <div
-      className={`flex h-full w-full flex-col bg-background ${isDarkMode ? "dark" : ""}`}
-    >
+    <div className="flex h-full w-full flex-col bg-background">
       <CalendarHeader
         selectedDay={selectedDay}
-        darkModeSwitch={
-          <SwitchWithLabel
-            label="Dark Mode"
-            defaultChecked={isDarkMode}
-            onCheckedChange={(checked) => setIsDarkMode(checked)}
-            className="ms-auto"
-          />
-        }
         onNavigation={(newDay: Dayjs) => setSelectedDay(newDay)}
       />
       <EventProvider events={events} onAdd={onAdd}>
