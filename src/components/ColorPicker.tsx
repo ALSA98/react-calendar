@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useId } from "react";
 import { CheckIcon } from "lucide-react";
 import { EVENT_COLORS } from "@/types";
+import { bgColorClasses } from "@/constants/colors";
 
 type Props = {
   selected?: (typeof EVENT_COLORS)[number];
@@ -13,14 +14,6 @@ type Props = {
 
 const ColorPicker = ({ selected, onChange }: Props) => {
   const id = useId();
-
-  const bgColorClasses: {
-    [K in (typeof EVENT_COLORS)[number]]: string;
-  } = {
-    red: "bg-red-600 hover:bg-red-400",
-    green: "bg-green-600 hover:bg-green-400",
-    blue: "bg-blue-600 hover:bg-blue-400",
-  };
 
   return (
     <span className="flex-col space-y-2">
