@@ -19,6 +19,7 @@ import {
 } from "@/types";
 import { FormEvent, useRef, useState } from "react";
 import { useEventContext } from "@/context/EventContext";
+import { Trash2Icon } from "lucide-react";
 
 type Props = {
   day: Dayjs;
@@ -39,7 +40,7 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
   const [startTime, setStartTime] = useState(event?.startTime || "");
   const endTimeRef = useRef<HTMLInputElement>(null);
 
-  const { addEvent } = useEventContext();
+  const { createEvent, updateEvent, deleteEvent } = useEventContext();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -72,21 +73,50 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
       };
     }
 
-    addEvent(newEvent);
+    if (event) {
+      updateEvent(event.id, newEvent);
+    } else {
+      createEvent(newEvent);
+    }
     onSubmitted();
+  };
+
+  const handleDelete = () => {
+    if (!event) return;
+    setTimeout(() => {
+      // wait for menu to be close first
+      deleteEvent(event.id);
+      onSubmitted();
+    }, 200);
   };
 
   return (
     <DialogContent>
-      {event && <EllipsisMenu className="absolute right-14 top-3" />}
+      {event && (
+        <EllipsisMenu
+          className="absolute right-14 top-3"
+          items={[
+            {
+              prepend: <Trash2Icon className="me-2 size-4" />,
+              label: "Delete",
+              onClick: handleDelete,
+            },
+          ]}
+        />
+      )}
       <DialogHeader>
         <DialogTitle>{title}</DialogTitle>
-        <span className="text-sm">{day?.format("	dddd, MMMM D, YYYY")}</span>
+        <span className="text-sm">{day?.format("dddd, MMMM D, YYYY")}</span>
       </DialogHeader>
       <form onSubmit={handleSubmit}>
         <DialogDescription>
           <span className="mt-2 flex flex-col space-y-5">
-            <InputWithLabel ref={nameRef} label="Name" required />
+            <InputWithLabel
+              ref={nameRef}
+              label="Name"
+              required
+              defaultValue={event?.name || undefined}
+            />
             <CheckboxWithLabel
               label="All Day"
               checked={isAllDayChecked}
@@ -107,6 +137,7 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
                 label="End Time"
                 type="time"
                 className="w-1/2"
+                defaultValue={event?.endTime || undefined}
                 min={startTime}
                 required={!isAllDayChecked}
                 disabled={isAllDayChecked}
