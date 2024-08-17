@@ -1,4 +1,4 @@
-import { CalendarEvent, NewCalendarEvent } from "@/types";
+import type { CalendarEvent, NewCalendarEvent } from "@/types";
 import {
   createContext,
   ReactNode,
@@ -9,12 +9,16 @@ import {
 
 export type EventContextValue = {
   events: CalendarEvent[];
-  addEvent: (newEvent: NewCalendarEvent) => Promise<void>;
+  createEvent: (newEvent: NewCalendarEvent) => Promise<void>;
+  updateEvent: (id: string, newEvent: NewCalendarEvent) => Promise<void>;
+  deleteEvent: (id: string) => Promise<void>;
 };
 
 const EventContext = createContext<EventContextValue>({
   events: [],
-  addEvent: () => Promise.resolve(),
+  createEvent: () => Promise.resolve(),
+  updateEvent: () => Promise.resolve(),
+  deleteEvent: () => Promise.resolve(),
 });
 
 export const useEventContext = () => {
@@ -27,22 +31,63 @@ export const useEventContext = () => {
 
 type ProviderProps = {
   events: CalendarEvent[];
-  onAdd: (newEvent: NewCalendarEvent) => Promise<{ id: string }>;
+  onCreate: (newEvent: NewCalendarEvent) => Promise<{ id: string }>;
+  onUpdate: (id: string, newEvent: NewCalendarEvent) => Promise<void>;
+  onDelete: (id: string) => Promise<void>;
   children: ReactNode;
 };
 
-const EventProvider = ({ events, children, onAdd }: ProviderProps) => {
+const EventProvider = ({
+  events,
+  children,
+  onCreate,
+  onUpdate,
+  onDelete,
+}: ProviderProps) => {
   const [cachedEvents, setCachedEvents] = useState(() => events);
+
   const value: EventContextValue = {
     events: cachedEvents,
-    addEvent: async (newEvent: NewCalendarEvent) => {
-      const { id } = await onAdd(newEvent);
-      setCachedEvents((prev) => [...prev, { ...newEvent, id }]);
+    createEvent: async (newEvent: NewCalendarEvent) => {
+      try {
+        const { id } = await onCreate(newEvent);
+        setCachedEvents((prev) => [...prev, { ...newEvent, id }]);
+      } catch (_err) {
+        console.error("Calendar: failed to create this event:", newEvent);
+      }
+    },
+    updateEvent: async (id: string, newEvent: NewCalendarEvent) => {
+      try {
+        await onUpdate(id, newEvent);
+        setCachedEvents((prev) => {
+          const updatedEventIndex = prev.findIndex((i) => i.id === id);
+          const updatedEvents = [...prev];
+          updatedEvents[updatedEventIndex] = { id, ...newEvent };
+          return updatedEvents;
+        });
+      } catch (_err) {
+        console.error("Calendar: failed to update this event:", {
+          id,
+          ...newEvent,
+        });
+      }
+    },
+    deleteEvent: async (id: string) => {
+      try {
+        await onDelete(id);
+        setCachedEvents((prev) => {
+          const deletedEventIndex = prev.findIndex((i) => i.id === id);
+          const updatedEvents = [...prev];
+          updatedEvents.splice(deletedEventIndex, 1);
+          return updatedEvents;
+        });
+      } catch (_err) {
+        console.error("Calendar: failed to delete this event:", id);
+      }
     },
   };
 
   useEffect(() => {
-    console.log("events prop effect inside context");
     setCachedEvents(events);
   }, [events]);
 

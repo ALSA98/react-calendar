@@ -25,6 +25,24 @@ function App() {
     setEvents((prevEvents) => [...prevEvents, { ...newEvent, id }]);
     return Promise.resolve({ id });
   };
+  const patchEvent = (id: string, newEvent: NewCalendarEvent) => {
+    setEvents((prevEvents) => {
+      const updatedEventIndex = prevEvents.findIndex((i) => i.id === id);
+      const updatedEvents = [...prevEvents];
+      updatedEvents[updatedEventIndex] = { id, ...newEvent };
+      return updatedEvents;
+    });
+    return Promise.resolve();
+  };
+  const deleteEvent = (id: string) => {
+    setEvents((prevEvents) => {
+      const deletedEventIndex = prevEvents.findIndex((i) => i.id === id);
+      const updatedEvents = [...prevEvents];
+      updatedEvents.splice(deletedEventIndex, 1);
+      return updatedEvents;
+    });
+    return Promise.resolve();
+  };
   // =========================
 
   return (
@@ -40,7 +58,12 @@ function App() {
           className="ms-auto"
         />
       </div>
-      <Calendar getIntervalEvents={getIntervalEvents} onAdd={postEvent} />
+      <Calendar
+        getIntervalEvents={getIntervalEvents}
+        onEventCreate={postEvent}
+        onEventUpdate={patchEvent}
+        onEventDelete={deleteEvent}
+      />
     </div>
   );
 }

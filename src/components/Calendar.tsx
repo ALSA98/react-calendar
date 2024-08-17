@@ -6,13 +6,21 @@ import en from "dayjs/locale/en";
 import EventProvider from "@/context/EventContext";
 import type { Dayjs } from "dayjs";
 import type { CalendarEvent, NewCalendarEvent } from "@/types";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 type Props = {
   getIntervalEvents: (start: Date, end: Date) => Promise<CalendarEvent[]>;
-  onAdd: (newEvent: NewCalendarEvent) => Promise<{ id: string }>;
+  onEventCreate: (newEvent: NewCalendarEvent) => Promise<{ id: string }>;
+  onEventUpdate: (id: string, newEvent: NewCalendarEvent) => Promise<void>;
+  onEventDelete: (id: string) => Promise<void>;
 };
 
-const Calendar = ({ getIntervalEvents, onAdd }: Props) => {
+const Calendar = ({
+  getIntervalEvents,
+  onEventCreate,
+  onEventUpdate,
+  onEventDelete,
+}: Props) => {
   const today = dayjs();
   const [intervalStart, setIntervalStart] = useState<Date>();
   const [intervalEnd, setIntervalEnd] = useState<Date>();
@@ -20,6 +28,7 @@ const Calendar = ({ getIntervalEvents, onAdd }: Props) => {
   const [selectedDay, setSelectedDay] = useState(dayjs(today));
 
   dayjs.locale({ ...en, weekStart: 6 });
+  dayjs.extend(customParseFormat);
 
   const refreshIntervalEvents = async () => {
     if (!intervalStart || !intervalEnd) return;
@@ -42,7 +51,12 @@ const Calendar = ({ getIntervalEvents, onAdd }: Props) => {
         selectedDay={selectedDay}
         onNavigation={(newDay: Dayjs) => setSelectedDay(newDay)}
       />
-      <EventProvider events={events} onAdd={onAdd}>
+      <EventProvider
+        events={events}
+        onCreate={onEventCreate}
+        onUpdate={onEventUpdate}
+        onDelete={onEventDelete}
+      >
         <CalendarMonth
           selectedDay={selectedDay}
           today={today}
