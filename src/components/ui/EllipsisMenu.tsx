@@ -5,14 +5,22 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/DropdownMenu";
 
-import { EllipsisVerticalIcon, Trash2Icon } from "lucide-react";
-import IconButton from "./IconButton";
+import { EllipsisVerticalIcon } from "lucide-react";
+import IconButton from "@/components/ui/IconButton";
+import { ReactNode } from "react";
+import List from "@/components/utils/List";
 
 type Props = {
+  items: {
+    label: String;
+    prepend?: ReactNode;
+    append?: ReactNode;
+    onClick: () => void;
+  }[];
   className?: string;
 };
 
-const EllipsisMenu = ({ className }: Props) => {
+const EllipsisMenu = ({ items, className }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,10 +29,15 @@ const EllipsisMenu = ({ className }: Props) => {
         </IconButton>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        <DropdownMenuItem>
-          <Trash2Icon className="me-2 size-4" />
-          Delete
-        </DropdownMenuItem>
+        <List items={items}>
+          {(item, key) => (
+            <DropdownMenuItem key={key} onClick={item.onClick}>
+              {item.prepend}
+              {item.label}
+              {item.append}
+            </DropdownMenuItem>
+          )}
+        </List>
       </DropdownMenuContent>
     </DropdownMenu>
   );
