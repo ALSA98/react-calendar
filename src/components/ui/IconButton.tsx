@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@/components/ui/Button";
-import { cloneElement, forwardRef, Ref, ReactElement } from "react";
+import { cloneElement, forwardRef, ReactElement } from "react";
 
 const IconButton = forwardRef<
   HTMLButtonElement,
