@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 
 type Props<T> = {
   items: readonly T[];
@@ -20,4 +20,4 @@ const List = <T,>({ items, getKey = defaultGetKey, children }: Props<T>) => {
   );
 };
 
-export default List;
+export default memo(List) as typeof List;

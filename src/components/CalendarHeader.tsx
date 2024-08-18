@@ -1,5 +1,6 @@
 import CalendarHeaderNavigator from "@/components/CalendarHeaderNavigator";
 import type { Dayjs } from "dayjs";
+import { memo } from "react";
 
 type Props = {
   selectedDay: Dayjs;
@@ -17,4 +18,6 @@ const CalendarHeader = ({ selectedDay, onNavigation }: Props) => {
   );
 };
 
-export default CalendarHeader;
+export default memo(CalendarHeader, (prevProps, nextProps) =>
+  prevProps.selectedDay.isSame(nextProps.selectedDay),
+);

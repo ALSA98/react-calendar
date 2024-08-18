@@ -7,7 +7,7 @@ import {
 
 import { EllipsisVerticalIcon } from "lucide-react";
 import IconButton from "@/components/ui/IconButton";
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import List from "@/components/utils/List";
 
 type Props = {
@@ -43,4 +43,4 @@ const EllipsisMenu = ({ items, className }: Props) => {
   );
 };
 
-export default EllipsisMenu;
+export default memo(EllipsisMenu);

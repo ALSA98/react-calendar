@@ -1,4 +1,4 @@
-import { ComponentProps, forwardRef, Ref, ReactNode, useId } from "react";
+import { ComponentProps, forwardRef, Ref, ReactNode, useId, memo } from "react";
 import { Input } from "@/components/ui/Input";
 import { Label } from "@/components/ui/Label";
 import { cn } from "@/lib/utils";
@@ -27,4 +27,4 @@ const InputWithLabel = forwardRef(
   },
 );
 
-export default InputWithLabel;
+export default memo(InputWithLabel);

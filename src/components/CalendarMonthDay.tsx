@@ -3,7 +3,7 @@ import { Dayjs } from "dayjs";
 import EventAdder from "@/components/EventAdder";
 import EventList from "@/components/EventList";
 import type { CalendarEvent } from "@/types";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 type Props = {
   day: Dayjs;
@@ -55,4 +55,4 @@ const CalendarMonthDay = ({ day, isToday, events }: Props) => {
   );
 };
 
-export default CalendarMonthDay;
+export default memo(CalendarMonthDay);

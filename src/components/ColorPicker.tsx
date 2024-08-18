@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/Label";
 
 import List from "@/components/utils/List";
 import { cn } from "@/lib/utils";
-import { useId } from "react";
+import { memo, useId } from "react";
 import { CheckIcon } from "lucide-react";
 import { EVENT_COLORS } from "@/types";
 import { bgColorClasses } from "@/constants/colors";
@@ -52,4 +52,4 @@ const ColorPicker = ({ selected, onChange }: Props) => {
   );
 };
 
-export default ColorPicker;
+export default memo(ColorPicker);

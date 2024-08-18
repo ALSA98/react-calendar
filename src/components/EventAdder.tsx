@@ -4,7 +4,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/Dialog";
 import { cn } from "@/lib/utils";
 import EventFormDialog from "@/components/EventFormDialog";
 import { Dayjs } from "dayjs";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 type Props = {
   day: Dayjs;
@@ -26,4 +26,4 @@ const EventAdder = ({ day, className }: Props) => {
   );
 };
 
-export default EventAdder;
+export default memo(EventAdder);

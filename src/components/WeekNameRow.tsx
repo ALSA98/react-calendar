@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { getEachDayOfInterval } from "@/lib/dayjs";
 import List from "@/components/utils/List";
 import type { Dayjs } from "dayjs";
@@ -34,4 +34,4 @@ const WeekNameRow = ({ firstDay }: Props) => {
   );
 };
 
-export default WeekNameRow;
+export default memo(WeekNameRow);

@@ -1,4 +1,4 @@
-import { ComponentProps, forwardRef, Ref, ReactNode, useId } from "react";
+import { ComponentProps, forwardRef, Ref, ReactNode, useId, memo } from "react";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Label } from "@/components/ui/Label";
 import { cn } from "@/lib/utils";
@@ -27,4 +27,4 @@ const CheckboxWithLabel = forwardRef(
   },
 );
 
-export default CheckboxWithLabel;
+export default memo(CheckboxWithLabel);
