@@ -15,9 +15,7 @@ function App() {
   }, [isDarkMode]);
   // =========================
   // === mock API behavior ===
-  const [events, setEvents] = useState<CalendarEvent[]>([
-    { color: "red", isAllDay: true, name: "test", id: "123", date: new Date() },
-  ]);
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
   const getIntervalEvents = (_start: Date, _end: Date) =>
     Promise.resolve(events);
   const postEvent = (newEvent: NewCalendarEvent) => {
