@@ -1,7 +1,7 @@
 import { getEachDayOfInterval } from "@/lib/dayjs";
 import List from "@/components/utils/List";
 import type { Dayjs } from "dayjs";
-import { useCallback, useEffect, useMemo } from "react";
+import { memo, useCallback, useEffect, useMemo } from "react";
 import CalendarMonthDay from "@/components/CalendarMonthDay";
 import WeekNameRow from "@/components/WeekNameRow";
 import { useEventContext } from "@/context/EventContext";
@@ -63,4 +63,6 @@ const CalendarMonth = ({ selectedDay, today, onIntervalChange }: Props) => {
   );
 };
 
-export default CalendarMonth;
+export default memo(CalendarMonth, (prevEvents, nextEvent) =>
+  nextEvent.selectedDay.isSame(prevEvents.selectedDay),
+);

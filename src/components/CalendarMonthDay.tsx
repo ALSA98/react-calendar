@@ -55,4 +55,10 @@ const CalendarMonthDay = ({ day, isToday, events }: Props) => {
   );
 };
 
-export default memo(CalendarMonthDay);
+export default memo(CalendarMonthDay, (prevProps, nextProps) => {
+  const eventsAreEqual = nextProps.events.every(
+    (nextEvent, index) =>
+      nextEvent.updatedAt === prevProps.events[index]?.updatedAt,
+  );
+  return eventsAreEqual && nextProps.day.isSame(prevProps.day);
+});

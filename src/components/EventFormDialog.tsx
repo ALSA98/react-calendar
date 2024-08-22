@@ -17,7 +17,7 @@ import {
   type CalendarEvent,
   type NewCalendarEvent,
 } from "@/types";
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useCallback, useRef, useState } from "react";
 import { useEventContext } from "@/context/EventContext";
 import { Trash2Icon } from "lucide-react";
 
@@ -42,6 +42,10 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
 
   const { createEvent, updateEvent, deleteEvent } = useEventContext();
 
+  const handleColorChange = useCallback((newSelected: typeof selectedColor) => {
+    setSelectedColor(newSelected);
+  }, []);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
@@ -54,6 +58,8 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
       name,
       date: event?.date || day.toDate(),
       color: selectedColor,
+      createdAt: event?.createdAt || new Date(),
+      updatedAt: new Date(),
     };
 
     let newEvent: NewCalendarEvent;
@@ -145,7 +151,7 @@ const EventFormDialog = ({ day, event, onSubmitted }: Props) => {
             </span>
             <ColorPicker
               selected={selectedColor}
-              onChange={(newSelected) => setSelectedColor(newSelected)}
+              onChange={handleColorChange}
             />
           </span>
         </DialogDescription>

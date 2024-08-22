@@ -26,4 +26,6 @@ const EventAdder = ({ day, className }: Props) => {
   );
 };
 
-export default memo(EventAdder);
+export default memo(EventAdder, (prevProps, nextProps) =>
+  nextProps.day.isSame(prevProps.day),
+);

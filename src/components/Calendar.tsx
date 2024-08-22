@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import CalendarHeader from "@/components/CalendarHeader";
 import CalendarMonth from "@/components/CalendarMonth";
 import dayjs from "dayjs";
@@ -67,4 +67,4 @@ const Calendar = ({
   );
 };
 
-export default Calendar;
+export default memo(Calendar, () => true);

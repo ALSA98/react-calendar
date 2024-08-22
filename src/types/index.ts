@@ -7,6 +7,8 @@ export type CalendarEvent = {
   name: string;
   color: (typeof EVENT_COLORS)[number];
   date: Date;
+  createdAt: Date;
+  updatedAt: Date;
 } & (
   | { isAllDay: false; startTime: string; endTime: string }
   | { isAllDay: true; startTime?: never; endTime?: never }

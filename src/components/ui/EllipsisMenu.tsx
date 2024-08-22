@@ -43,4 +43,4 @@ const EllipsisMenu = ({ items, className }: Props) => {
   );
 };
 
-export default memo(EllipsisMenu);
+export default memo(EllipsisMenu, () => true);

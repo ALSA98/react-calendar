@@ -15,4 +15,10 @@ const EventList = ({ events }: Props) => {
   );
 };
 
-export default memo(EventList);
+export default memo(EventList, (prevProps, nextProps) => {
+  const eventsAreEqual = nextProps.events.every(
+    (nextEvent, index) =>
+      nextEvent.updatedAt === prevProps.events[index]?.updatedAt,
+  );
+  return eventsAreEqual;
+});
